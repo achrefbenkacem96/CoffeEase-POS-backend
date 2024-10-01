@@ -140,6 +140,7 @@ type Mutation {
   deleteTable(id: Int!): TableDTO!
   createPayment(orderId: Float!, amount: Float!, paymentType: String!): PaymentDTO!
   updatePaymentStatus(id: Float!, status: String!): PaymentDTO!
+  updateStock(productId: Float!, quantity: Float!): StockDTO!
   generateStockReport(productId: Float!): StockReportDTO!
   generateFinancialReport: FinancialReportDTO!
 }
