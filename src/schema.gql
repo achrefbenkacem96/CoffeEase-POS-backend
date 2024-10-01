@@ -22,6 +22,7 @@ type AuthResponse {
 type CategoryDTO {
   id: Int!
   name: String!
+  imageUrl: String
   products: [ProductDTO!]
 }
 
@@ -129,8 +130,8 @@ type Mutation {
   createOrder(productId: Float!, quantity: Float!, tableId: Float!): OrderDTO!
   updateOrderStatus(id: Float!, status: String!): OrderDTO!
   deleteOrder(id: Int!): OrderDTO!
-  createCategory(name: String!): CategoryDTO!
-  updateCategory(id: Int!, name: String!): CategoryDTO!
+  createCategory(name: String!, imageUrl: String!): CategoryDTO!
+  updateCategory(id: Float!, name: String!, imageUrl: String!): CategoryDTO!
   deleteCategory(id: Float!): CategoryDTO!
   createMenu(name: String!, categoryIds: [Int!]!): MenuDTO!
   updateMenu(id: Float!, name: String!, categoryIds: [Int!]!): MenuDTO!

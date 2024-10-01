@@ -6,10 +6,12 @@ import { Category } from '@prisma/client';
 export class CategoryService {
   constructor(private prisma: PrismaService) {}
 
-  // Créer une nouvelle catégorie
-  async createCategory(name: string): Promise<Category> {
+  async createCategory(name: string, imageUrl: string): Promise<Category> {
     return this.prisma.category.create({
-      data: { name },
+      data: {
+        name,
+        imageUrl,
+      },
     });
   }
 
@@ -26,10 +28,10 @@ export class CategoryService {
   }
 
   // Mettre à jour une catégorie
-  async updateCategory(id: number, name: string): Promise<Category> {
+  async updateCategory(id: number, name: string, imageUrl: string): Promise<Category> {
     return this.prisma.category.update({
       where: { id },
-      data: { name },
+      data: { name, imageUrl },
     });
   }
 

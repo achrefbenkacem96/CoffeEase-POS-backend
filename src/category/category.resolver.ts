@@ -12,13 +12,20 @@ export class CategoryResolver {
   }
 
   @Mutation(() => CategoryDTO)
-  async createCategory(@Args('name') name: string) {
-    return this.categoryService.createCategory(name);
+  async createCategory(
+    @Args('name') name: string,
+    @Args('imageUrl') imageUrl: string,
+  ): Promise<CategoryDTO> {
+    return this.categoryService.createCategory(name, imageUrl);
   }
 
   @Mutation(() => CategoryDTO)
-  async updateCategory(@Args('id', { type: () => Int }) id: number, @Args('name') name: string) {
-    return this.categoryService.updateCategory(id, name);
+  async updateCategory(
+    @Args('id') id: number,
+    @Args('name') name: string,
+    @Args('imageUrl') imageUrl: string,
+  ): Promise<CategoryDTO> {
+    return this.categoryService.updateCategory(id, name, imageUrl);
   }
 
   @Mutation(() => CategoryDTO)

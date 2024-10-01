@@ -78,10 +78,11 @@ export class StockService {
         stock: updatedProduct.stock,
         stockAlert: updatedProduct.stockAlert || 0,
         createdAt: updatedProduct.createdAt,
-        category: {  // Inclure l'objet `category`
-          id: product.category.id,  // Maintenant on utilise `product.category`
-          name: product.category.name,  
+        category: {
+          id: product.category.id, // Maintenant on utilise `product.category`
+          name: product.category.name,
           createdAt: product.category.createdAt,
+          imageUrl: ''
         },
       },
     };

@@ -19,10 +19,13 @@ model User {
 model Category {
   id        Int       @id @default(autoincrement())
   name      String
+  imageUrl  String?   // Nouveau champ pour l'URL de l'image
   products  Product[]
   menus     Menu[]    @relation("MenuCategories")
   createdAt DateTime  @default(now())
 }
+
+
 
 model Product {
   id          Int           @id @default(autoincrement())

@@ -9,6 +9,9 @@ export class CategoryDTO {
   @Field()
   name: string;
 
+  @Field({ nullable: true }) // Ajout du champ imageUrl
+  imageUrl?: string;
+
   @Field(() => [ProductDTO], { nullable: true })  // Permet de renvoyer un tableau de ProductDTO
   products?: ProductDTO[];
 }
