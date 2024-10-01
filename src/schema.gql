@@ -1,0 +1,145 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserDTO {
+  id: ID!
+  email: String!
+  password: String!
+  role: String!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AuthResponse {
+  access_token: String!
+}
+
+type CategoryDTO {
+  id: Int!
+  name: String!
+  products: [ProductDTO!]
+}
+
+type ProductDTO {
+  id: Int!
+  name: String!
+  description: String!
+  price: Float!
+  stock: Int!
+  stockAlert: Int!
+  createdAt: DateTime!
+  category: CategoryDTO!
+}
+
+type TableDTO {
+  id: Int!
+  number: Float!
+  status: String!
+  createdAt: DateTime!
+}
+
+type OrderDTO {
+  id: Int!
+  status: String!
+  quantity: Int!
+  product: ProductDTO!
+  table: TableDTO!
+  createdAt: DateTime!
+}
+
+type StockDTO {
+  id: Int!
+  productId: Int!
+  product: ProductDTO
+  movement: String!
+  quantity: Int!
+}
+
+type MenuDTO {
+  id: Int!
+  name: String!
+  categories: [CategoryDTO!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PaymentDTO {
+  id: Int!
+  amount: Float!
+  status: String!
+  paymentType: String!
+  order: OrderDTO
+}
+
+type SalesReportDTO {
+  productId: Int!
+  quantitySold: Int!
+  totalRevenue: Float!
+  createdAt: DateTime!
+}
+
+type StockReportDTO {
+  id: Int!
+  product: ProductDTO
+  stockBefore: Int!
+  stockAfter: Int!
+  movement: String!
+  createdAt: DateTime!
+}
+
+type FinancialReportDTO {
+  id: Int!
+  totalRevenue: Float!
+  totalExpenses: Float!
+  profitOrLoss: Float!
+  createdAt: DateTime!
+}
+
+type Query {
+  users: [UserDTO!]!
+  products: [ProductDTO!]!
+  orders: [OrderDTO!]!
+  getOrderById(id: Int!): OrderDTO!
+  stockMovements(productId: Float!): [StockDTO!]!
+  categories: [CategoryDTO!]!
+  menus: [MenuDTO!]!
+  tables: [TableDTO!]!
+  getPayments: [PaymentDTO!]!
+  stocks: [StockDTO!]!
+  generateSalesReport: SalesReportDTO!
+  getSalesReports: [SalesReportDTO!]!
+  getStockReports: [StockReportDTO!]!
+  getFinancialReports: [FinancialReportDTO!]!
+}
+
+type Mutation {
+  register(email: String!, password: String!, role: String!): UserDTO!
+  updateUserRole(id: Float!, role: String!): Boolean!
+  login(email: String!, password: String!): AuthResponse!
+  requestPasswordReset(email: String!): Boolean!
+  resetPassword(token: String!, newPassword: String!): Boolean!
+  addProduct(name: String!, description: String!, price: Float!, stock: Float!, categoryId: Float!): ProductDTO!
+  updateProduct(id: Float!, name: String!, description: String!, price: Float!, stock: Float!, categoryId: Int): ProductDTO!
+  deleteProduct(id: Float!): ProductDTO!
+  createOrder(productId: Float!, quantity: Float!, tableId: Float!): OrderDTO!
+  updateOrderStatus(id: Float!, status: String!): OrderDTO!
+  deleteOrder(id: Int!): OrderDTO!
+  createCategory(name: String!): CategoryDTO!
+  updateCategory(id: Int!, name: String!): CategoryDTO!
+  deleteCategory(id: Float!): CategoryDTO!
+  createMenu(name: String!, categoryIds: [Int!]!): MenuDTO!
+  updateMenu(id: Float!, name: String!, categoryIds: [Int!]!): MenuDTO!
+  deleteMenu(id: Float!): MenuDTO!
+  createTable(number: Float!, status: String! = "AVAILABLE"): TableDTO!
+  updateTableStatus(id: Int!, status: String!): TableDTO!
+  deleteTable(id: Int!): TableDTO!
+  createPayment(orderId: Float!, amount: Float!, paymentType: String!): PaymentDTO!
+  updatePaymentStatus(id: Float!, status: String!): PaymentDTO!
+  generateStockReport(productId: Float!): StockReportDTO!
+  generateFinancialReport: FinancialReportDTO!
+}
