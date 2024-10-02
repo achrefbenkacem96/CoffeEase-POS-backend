@@ -60,6 +60,7 @@ type StockDTO {
   product: ProductDTO
   movement: String!
   quantity: Int!
+  createdAt: DateTime!
 }
 
 type MenuDTO {
@@ -143,7 +144,9 @@ type Mutation {
   deleteTable(id: Int!): TableDTO!
   createPayment(orderId: Float!, amount: Float!, paymentType: String!): PaymentDTO!
   updatePaymentStatus(id: Float!, status: String!): PaymentDTO!
-  updateStock(productId: Float!, quantity: Float!): StockDTO!
+  addStock(productId: Int!, quantity: Int!, movement: String!): StockDTO!
+  updateStock(id: Int!, quantity: Int!): StockDTO!
+  deleteStock(id: Int!): StockDTO!
   generateStockReport(productId: Float!): StockReportDTO!
   generateFinancialReport: FinancialReportDTO!
 }

@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { ProductDTO } from '../product/product.dto';  // Assurez-vous d'importer ProductDTO
+import { ProductDTO } from '../product/product.dto'; 
 
 @ObjectType()
 export class StockDTO {
@@ -13,8 +13,11 @@ export class StockDTO {
   product?: ProductDTO;
 
   @Field()
-  movement: string;
+  movement: string;  // Ajout du champ movement
 
   @Field(() => Int)
   quantity: number;
+
+  @Field(() => Date)
+  createdAt: Date;
 }

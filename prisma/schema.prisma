@@ -89,8 +89,8 @@ model Stock {
   id        Int      @id @default(autoincrement())
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
-  movement  String // 'ajout' ou 'retrait'
   quantity  Int
+  movement  String
   createdAt DateTime @default(now())
 }
 
