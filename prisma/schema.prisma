@@ -19,30 +19,29 @@ model User {
 model Category {
   id        Int       @id @default(autoincrement())
   name      String
-  imageUrl  String?   // Nouveau champ pour l'URL de l'image
+  imageUrl  String? // Nouveau champ pour l'URL de l'image
   products  Product[]
   menus     Menu[]    @relation("MenuCategories")
   createdAt DateTime  @default(now())
 }
 
-
-
 model Product {
-  id          Int           @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String
   price       Float
   stock       Int
-  stockAlert  Int           @default(10)
-  createdAt   DateTime      @default(now())
+  stockAlert  Int      @default(10)
+  createdAt   DateTime @default(now())
+  imageUrl    String? // Ajout de l'URL de l'image
   categoryId  Int
-  category    Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  orders      Order[]
-  stockReports StockReport[]  // Ajoute cette relation avec StockReport
-  stocks      Stock[]        // Ajoute cette relation avec Stock
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Ajoutez les relations inverses ici
+  orders       Order[] // Relation avec Order
+  stocks       Stock[] // Relation avec Stock
+  stockReports StockReport[] // Relation avec StockReport
 }
-
-
 
 model Order {
   id        Int      @id @default(autoincrement())
@@ -54,9 +53,9 @@ model Order {
 
   payment   Payment? @relation("OrderPayment")
   paymentId Int?
-  
-  tableId   Int?
-  table     Table?   @relation(fields: [tableId], references: [id], name: "TableOrders")
+
+  tableId Int?
+  table   Table? @relation(fields: [tableId], references: [id], name: "TableOrders")
 }
 
 model Menu {
@@ -87,23 +86,21 @@ model Payment {
 }
 
 model Stock {
-  id          Int      @id @default(autoincrement())
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId   Int
-  movement    String   // 'ajout' ou 'retrait'
-  quantity    Int
-  createdAt   DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  movement  String // 'ajout' ou 'retrait'
+  quantity  Int
+  createdAt DateTime @default(now())
 }
-
 
 model SalesReport {
-  id          Int      @id @default(autoincrement())
-  productId   Int
+  id           Int      @id @default(autoincrement())
+  productId    Int
   quantitySold Int
   totalRevenue Float
-  createdAt   DateTime @default(now())
+  createdAt    DateTime @default(now())
 }
-
 
 model StockReport {
   id          Int      @id @default(autoincrement())
@@ -115,13 +112,10 @@ model StockReport {
   createdAt   DateTime @default(now())
 }
 
-
-
-
 model FinancialReport {
-  id           Int      @id @default(autoincrement())
-  totalRevenue Float
+  id            Int      @id @default(autoincrement())
+  totalRevenue  Float
   totalExpenses Float
-  profitOrLoss Float
-  createdAt    DateTime @default(now())
+  profitOrLoss  Float
+  createdAt     DateTime @default(now())
 }

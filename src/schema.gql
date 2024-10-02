@@ -33,6 +33,7 @@ type ProductDTO {
   price: Float!
   stock: Int!
   stockAlert: Int!
+  imageUrl: String
   createdAt: DateTime!
   category: CategoryDTO!
 }
@@ -104,6 +105,7 @@ type FinancialReportDTO {
 type Query {
   users: [UserDTO!]!
   products: [ProductDTO!]!
+  productsByCategory(categoryId: Int!): [ProductDTO!]!
   orders: [OrderDTO!]!
   getOrderById(id: Int!): OrderDTO!
   stockMovements(productId: Float!): [StockDTO!]!
@@ -124,8 +126,8 @@ type Mutation {
   login(email: String!, password: String!): AuthResponse!
   requestPasswordReset(email: String!): Boolean!
   resetPassword(token: String!, newPassword: String!): Boolean!
-  addProduct(name: String!, description: String!, price: Float!, stock: Float!, categoryId: Float!): ProductDTO!
-  updateProduct(id: Float!, name: String!, description: String!, price: Float!, stock: Float!, categoryId: Int): ProductDTO!
+  addProduct(name: String!, description: String!, price: Float!, stock: Float!, categoryId: Float!, imageUrl: String): ProductDTO!
+  updateProduct(productId: Float!, name: String, description: String, price: Float, stock: Float, imageUrl: String, categoryId: Float): ProductDTO!
   deleteProduct(id: Float!): ProductDTO!
   createOrder(productId: Float!, quantity: Float!, tableId: Float!): OrderDTO!
   updateOrderStatus(id: Float!, status: String!): OrderDTO!

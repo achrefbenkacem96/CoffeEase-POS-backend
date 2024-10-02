@@ -22,6 +22,9 @@ export class ProductDTO {
   @Field(() => Int)
   stockAlert: number;  // Ajoute le champ stockAlert
 
+  @Field(() => String, { nullable: true })
+  imageUrl?: string;  // Ajout du champ imageUrl
+
   @Field(() => Date)
   createdAt: Date;
 
