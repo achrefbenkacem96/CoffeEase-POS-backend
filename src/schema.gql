@@ -107,7 +107,7 @@ type Query {
   users: [UserDTO!]!
   products: [ProductDTO!]!
   productsByCategory(categoryId: Int!): [ProductDTO!]!
-  orders: [OrderDTO!]!
+  orders(tableId: Int!): [OrderDTO!]!
   getOrderById(id: Int!): OrderDTO!
   stockMovements(productId: Float!): [StockDTO!]!
   categories: [CategoryDTO!]!

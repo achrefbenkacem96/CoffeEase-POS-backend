@@ -4,6 +4,14 @@ import { Order } from '@prisma/client';
 
 @Injectable()
 export class OrderService {
+  async getOrdersByTable(tableId: number): Promise<Order[]> {
+    return this.prisma.order.findMany({
+      where: { tableId },
+      include: {
+        product: true, // Inclure les produits dans la commande
+      },
+    });
+  }
   constructor(private prisma: PrismaService) {}
 
   // Créer une commande avec gestion du stock
@@ -83,4 +91,6 @@ export class OrderService {
       include: { product: true, table: true },
     });
   }
+
+  
 }

@@ -19,12 +19,13 @@ async createTable(number: number, status: string): Promise<TableDTO> {
 
 
   // Mettre à jour le statut d'une table
-  async updateTableStatus(id: number, status: string): Promise<Table> {
+  async updateTableStatus(id: number, status: string): Promise<TableDTO> {
     return this.prisma.table.update({
       where: { id },
       data: { status },
     });
   }
+  
 
   // Supprimer une table
   async deleteTable(id: number): Promise<Table> {

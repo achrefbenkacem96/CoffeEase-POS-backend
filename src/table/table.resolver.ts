@@ -30,6 +30,7 @@ async createTable(
   ) {
     return this.tableService.updateTableStatus(id, status);
   }
+  
 
   // Mutation pour supprimer une table
   @Mutation(() => TableDTO)

@@ -10,8 +10,10 @@ export class OrderResolver {
 
   // Requête pour obtenir toutes les commandes
   @Query(() => [OrderDTO])
-  async orders() {
-    return this.orderService.getOrders();
+  async orders(
+    @Args('tableId', { type: () => Int }) tableId: number,
+  ) {
+    return this.orderService.getOrdersByTable(tableId);
   }
 
   // Requête pour obtenir une commande par son ID
