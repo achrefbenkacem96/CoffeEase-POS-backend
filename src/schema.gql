@@ -43,6 +43,7 @@ type TableDTO {
   number: Float!
   status: String!
   createdAt: DateTime!
+  orders: [OrderDTO!]
 }
 
 type OrderDTO {
@@ -51,15 +52,6 @@ type OrderDTO {
   quantity: Int!
   product: ProductDTO!
   table: TableDTO!
-  createdAt: DateTime!
-}
-
-type StockDTO {
-  id: Int!
-  productId: Int!
-  product: ProductDTO
-  movement: String!
-  quantity: Int!
   createdAt: DateTime!
 }
 
@@ -77,6 +69,15 @@ type PaymentDTO {
   status: String!
   paymentType: String!
   order: OrderDTO
+}
+
+type StockDTO {
+  id: Int!
+  productId: Int!
+  product: ProductDTO
+  movement: String!
+  quantity: Int!
+  createdAt: DateTime!
 }
 
 type SalesReportDTO {
@@ -109,10 +110,10 @@ type Query {
   productsByCategory(categoryId: Int!): [ProductDTO!]!
   orders(tableId: Int!): [OrderDTO!]!
   getOrderById(id: Int!): OrderDTO!
-  stockMovements(productId: Float!): [StockDTO!]!
   categories: [CategoryDTO!]!
   menus: [MenuDTO!]!
   tables: [TableDTO!]!
+  table(id: Int!): TableDTO!
   getPayments: [PaymentDTO!]!
   stocks: [StockDTO!]!
   generateSalesReport: SalesReportDTO!
@@ -130,8 +131,9 @@ type Mutation {
   addProduct(name: String!, description: String!, price: Float!, stock: Float!, categoryId: Float!, imageUrl: String): ProductDTO!
   updateProduct(productId: Float!, name: String, description: String, price: Float, stock: Float, imageUrl: String, categoryId: Float): ProductDTO!
   deleteProduct(id: Float!): ProductDTO!
+  updateOrderQuantity(orderId: Int!, quantity: Int!): OrderDTO!
   createOrder(productId: Float!, quantity: Float!, tableId: Float!): OrderDTO!
-  updateOrderStatus(id: Float!, status: String!): OrderDTO!
+  updateOrderStatus(id: Int!, status: String!): OrderDTO!
   deleteOrder(id: Int!): OrderDTO!
   createCategory(name: String!, imageUrl: String!): CategoryDTO!
   updateCategory(id: Float!, name: String!, imageUrl: String!): CategoryDTO!

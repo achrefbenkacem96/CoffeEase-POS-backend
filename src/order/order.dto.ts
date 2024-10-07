@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { ProductDTO } from 'src/product/product.dto';
-import { TableDTO } from 'src/table/table.dto'; // Assurez-vous d'importer TableDTO
+import { ProductDTO } from '../product/product.dto';  // Assurez-vous d'avoir défini ProductDTO
+import { TableDTO } from '../table/table.dto';        // Assurez-vous d'avoir défini TableDTO
 
 @ObjectType()
 export class OrderDTO {
@@ -13,10 +13,10 @@ export class OrderDTO {
   @Field(() => Int)
   quantity: number;
 
-  @Field(() => ProductDTO)
+  @Field(() => ProductDTO)  // Assurez-vous que ProductDTO est bien défini
   product: ProductDTO;
 
-  @Field(() => TableDTO) // Ajouter la table ici
+  @Field(() => TableDTO)     // Assurez-vous que TableDTO est bien défini
   table: TableDTO;
 
   @Field(() => Date)

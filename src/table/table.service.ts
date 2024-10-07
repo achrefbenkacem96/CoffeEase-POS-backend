@@ -7,16 +7,15 @@ import { TableDTO } from './table.dto';
 export class TableService {
   constructor(private prisma: PrismaService) {}
 
-  // table.service.ts
-async createTable(number: number, status: string): Promise<TableDTO> {
-  return this.prisma.table.create({
-    data: {
-      number,
-      status,
-    },
-  });
-}
-
+  // Créer une table
+  async createTable(number: number, status: string): Promise<TableDTO> {
+    return this.prisma.table.create({
+      data: {
+        number,
+        status,
+      },
+    });
+  }
 
   // Mettre à jour le statut d'une table
   async updateTableStatus(id: number, status: string): Promise<TableDTO> {
@@ -25,7 +24,6 @@ async createTable(number: number, status: string): Promise<TableDTO> {
       data: { status },
     });
   }
-  
 
   // Supprimer une table
   async deleteTable(id: number): Promise<Table> {
@@ -34,18 +32,30 @@ async createTable(number: number, status: string): Promise<TableDTO> {
     });
   }
 
-  // Obtenir toutes les tables
+  // Obtenir toutes les tables avec les détails des commandes et des produits
   async getTables(): Promise<Table[]> {
     return this.prisma.table.findMany({
-      include: { orders: true }, // Inclure les commandes liées à la table
+      include: { 
+        orders: {
+          include: {
+            product: true, // Inclure le produit dans les commandes
+          },
+        },
+      },
     });
   }
 
-  // Obtenir une table par son ID
+  // Obtenir une table par son ID avec les détails des commandes et des produits
   async getTableById(id: number): Promise<Table> {
     return this.prisma.table.findUnique({
       where: { id },
-      include: { orders: true }, // Inclure les commandes
+      include: { 
+        orders: {
+          include: {
+            product: true,  // Inclure les détails des produits dans les commandes
+          },
+        },
+      },
     });
   }
 }

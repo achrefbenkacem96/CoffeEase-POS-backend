@@ -6,21 +6,20 @@ import { TableDTO } from './table.dto';
 export class TableResolver {
   constructor(private tableService: TableService) {}
 
-  // Requête pour obtenir toutes les tables
+  // Requête pour obtenir toutes les tables avec les commandes et produits
   @Query(() => [TableDTO])
   async tables() {
     return this.tableService.getTables();
   }
 
   // Mutation pour créer une table avec un statut
-@Mutation(() => TableDTO)
-async createTable(
-  @Args('number') number: number,
-  @Args('status', { defaultValue: 'AVAILABLE' }) status: string,
-) {
-  return this.tableService.createTable(number, status);
-}
-
+  @Mutation(() => TableDTO)
+  async createTable(
+    @Args('number') number: number,
+    @Args('status', { defaultValue: 'AVAILABLE' }) status: string,
+  ) {
+    return this.tableService.createTable(number, status);
+  }
 
   // Mutation pour mettre à jour le statut d'une table
   @Mutation(() => TableDTO)
@@ -30,11 +29,16 @@ async createTable(
   ) {
     return this.tableService.updateTableStatus(id, status);
   }
-  
 
   // Mutation pour supprimer une table
   @Mutation(() => TableDTO)
   async deleteTable(@Args('id', { type: () => Int }) id: number) {
     return this.tableService.deleteTable(id);
+  }
+
+  // Requête pour obtenir une table par son ID avec les commandes et produits
+  @Query(() => TableDTO)
+  async table(@Args('id', { type: () => Int }) id: number) {
+    return this.tableService.getTableById(id);
   }
 }
