@@ -6,30 +6,39 @@ import { SalesReportDTO } from './sales-report.dto';
 export class SalesReportService {
   constructor(private prisma: PrismaService) {}
 
-  // Générer un rapport de ventes
-  async generateSalesReport(): Promise<SalesReportDTO> {
-    // Exemple de logique pour générer un rapport de ventes
-    const report = await this.prisma.order.groupBy({
-      by: ['productId'],
-      _sum: {
-        quantity: true,
-      },
-      _count: {
-        id: true,
-      },
-    });
+  // Générer un rapport de ventes pour tous les produits
+  // SalesReportService.ts
+async generateSalesReport(): Promise<SalesReportDTO[]> {
+  // Regroupe par produit
+  const report = await this.prisma.order.groupBy({
+    by: ['productId'],
+    _sum: { quantity: true },
+  });
 
-    // Transformation des données
+  // Ajoute une vérification que chaque produit est trouvé
+  const productIds = report.map(r => r.productId);
+  const products = await this.prisma.product.findMany({
+    where: { id: { in: productIds } },
+    select: { id: true, price: true },
+  });
+
+  return report.map((r) => {
+    const product = products.find(p => p.id === r.productId);
+    const quantitySold = r._sum.quantity || 0;
+    const totalRevenue = quantitySold * (product?.price || 0);
+
     return {
-      productId: report[0].productId,
-      quantitySold: report[0]._sum.quantity,
-      totalRevenue: report[0]._sum.quantity * 20, // Supposons que chaque produit vaut 20
+      productId: r.productId,
+      quantitySold,
+      totalRevenue,
       createdAt: new Date(),
     };
-  }
+  });
+}
 
-  // Obtenir tous les rapports de ventes
+
+  // Obtenir tous les rapports de ventes déjà générés
   async getSalesReports(): Promise<SalesReportDTO[]> {
-    return this.prisma.salesReport.findMany(); // Récupère les rapports depuis la base de données
+    return this.prisma.salesReport.findMany();
   }
 }

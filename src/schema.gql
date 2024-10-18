@@ -116,7 +116,6 @@ type Query {
   table(id: Int!): TableDTO!
   getPayments: [PaymentDTO!]!
   stocks: [StockDTO!]!
-  generateSalesReport: SalesReportDTO!
   getSalesReports: [SalesReportDTO!]!
   getStockReports: [StockReportDTO!]!
   getFinancialReports: [FinancialReportDTO!]!
@@ -149,6 +148,7 @@ type Mutation {
   addStock(productId: Int!, quantity: Int!, movement: String!): StockDTO!
   updateStock(id: Int!, quantity: Int!): StockDTO!
   deleteStock(id: Int!): StockDTO!
+  generateSalesReport: [SalesReportDTO!]!
   generateStockReport(productId: Float!): StockReportDTO!
   generateFinancialReport: FinancialReportDTO!
 }

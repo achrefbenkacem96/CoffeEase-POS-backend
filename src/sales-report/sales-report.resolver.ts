@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Mutation } from '@nestjs/graphql';
 import { SalesReportService } from './sales-report.service';
 import { SalesReportDTO } from './sales-report.dto';
 
@@ -7,7 +7,7 @@ export class SalesReportResolver {
   constructor(private salesReportService: SalesReportService) {}
 
   // Mutation pour générer un rapport de ventes
-  @Query(() => SalesReportDTO)
+  @Mutation(() => [SalesReportDTO])  // Modification : retourne un tableau d'objets
   async generateSalesReport() {
     return this.salesReportService.generateSalesReport();
   }

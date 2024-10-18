@@ -6,8 +6,8 @@ export class StockReportDTO {
   @Field(() => Int)
   id: number;
 
-  @Field(() => ProductDTO, { nullable: true }) // Utilisez nullable: true si le produit peut être null
-  product?: ProductDTO; // Le rendre facultatif ou nullable
+  @Field(() => ProductDTO, { nullable: true })
+  product?: ProductDTO;  // Utilisez product et non productId
 
   @Field(() => Int)
   stockBefore: number;
@@ -21,3 +21,4 @@ export class StockReportDTO {
   @Field(() => Date)
   createdAt: Date;
 }
+

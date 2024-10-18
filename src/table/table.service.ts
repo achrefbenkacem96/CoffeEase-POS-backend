@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Table } from '@prisma/client';
 import { TableDTO } from './table.dto';
@@ -7,11 +7,22 @@ import { TableDTO } from './table.dto';
 export class TableService {
   constructor(private prisma: PrismaService) {}
 
-  // Créer une table
+  // Créer une table avec le prochain numéro disponible
   async createTable(number: number, status: string): Promise<TableDTO> {
+    // Trouver le plus grand numéro de table existant
+    const lastTable = await this.prisma.table.findFirst({
+      orderBy: {
+        number: 'desc',
+      },
+    });
+
+    // Si une table existe, ajouter 1 au plus grand numéro trouvé, sinon commencer à 1
+    const nextTableNumber = lastTable ? lastTable.number + 1 : 1;
+
+    // Créer la nouvelle table avec le prochain numéro disponible
     return this.prisma.table.create({
       data: {
-        number,
+        number: nextTableNumber,
         status,
       },
     });
