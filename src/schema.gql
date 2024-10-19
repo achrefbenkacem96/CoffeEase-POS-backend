@@ -108,7 +108,7 @@ type Query {
   users: [UserDTO!]!
   products: [ProductDTO!]!
   productsByCategory(categoryId: Int!): [ProductDTO!]!
-  orders(tableId: Int!): [OrderDTO!]!
+  orders(tableId: Int!, status: String): [OrderDTO!]!
   getOrderById(id: Int!): OrderDTO!
   categories: [CategoryDTO!]!
   menus: [MenuDTO!]!

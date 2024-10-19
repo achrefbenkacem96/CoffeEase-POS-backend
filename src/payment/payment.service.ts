@@ -32,8 +32,8 @@ export class PaymentService {
     });
   
     // Clôturer la commande
-    await this.prisma.order.update({
-      where: { id: orderId },
+    await this.prisma.order.updateMany({
+      where: { tableId: orderId },
       data: { status: 'COMPLETED' }, // Mettre à jour le statut de la commande à "COMPLETED"
     });
   

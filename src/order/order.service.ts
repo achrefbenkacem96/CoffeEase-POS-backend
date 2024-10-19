@@ -66,9 +66,12 @@ export class OrderService {
     });
   }
 
-  async getOrdersByTable(tableId: number): Promise<Order[]> {
+  async getOrdersByTable(tableId: number, status?:string): Promise<Order[]> {
     return this.prisma.order.findMany({
-      where: { tableId },
+      where: {
+        tableId,
+        ...(status && { status }), // Conditionally include status only if it exists
+      },
       include: {
         product: true, // Inclure l'objet complet Product
         table: true,   // Inclure l'objet complet Table

@@ -83,13 +83,18 @@ export class OrderResolver {
   }
 
   @Query(() => [OrderDTO])
-  async orders(@Args('tableId', { type: () => Int }) tableId: number): Promise<OrderDTO[]> {
-    const orders = await this.orderService.getOrdersByTable(tableId);
+  async orders(
+    @Args('tableId', { type: () => Int }) tableId: number,
+    @Args('status', { nullable: true }) status?: string // Mark status as optional
+  ): Promise<OrderDTO[]> {
+    // Fetch orders with or without status depending on whether it's provided
+    const orders = await this.orderService.getOrdersByTable(tableId, status);
+  
     return Promise.all(
       orders.map(async (order) => {
         const product = await this.orderService.getProductWithCategoryById(order.productId);
         const table = await this.orderService.getTableById(order.tableId);
-        
+  
         return {
           id: order.id,
           status: order.status,
@@ -101,6 +106,7 @@ export class OrderResolver {
       })
     );
   }
+  
 
   @Query(() => OrderDTO)
   async getOrderById(@Args('id', { type: () => Int }) id: number): Promise<OrderDTO> {
